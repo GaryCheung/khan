@@ -22,12 +22,14 @@ def get_entire_course():
     web_data = requests.get(url)
     soup = BeautifulSoup(web_data.text,'lxml')
     courses = soup.select('div.m-cate.m-cate1 > div.g-container > div.g-row.g-limitrow.j-row > div.g-cell1.g-card1 > a > h5')
-    urls = soup.select('div.m-cate.m-cate1 > div.g-container > div.g-row.g-limitrow.j-row > div.g-cell1.g-card1 > a')
+    urls = soup.select('div.m-cate.m-cate1 > div.g-container > div.g-row.g-limitrow.j-row > div.g-cell1.g-card1 > a:nth-of-type(2)')
     url = []
     course = []
     for course_trans,url_trans in zip(courses,urls):
         course.append(course_trans.get_text())
         url.append(url_trans.get('href'))
+        print(course_trans,'---------------------\n',url_trans,'----------------------\n')
+        # print(url_trans)
     return course,url
 
 def mysql_insert(course,url,config):
